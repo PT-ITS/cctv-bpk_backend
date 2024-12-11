@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use DateTimeZone;
 use DateTime;
@@ -49,23 +51,27 @@ class AuthController extends Controller
      */
     public function login()
     {
+        // Get the email and password from the request
         $credentials = request(['email', 'password']);
 
-        if (! $token = JWTAuth::attempt($credentials)) {
+        // Attempt to create a token using the provided credentials
+        if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        // Fetch the user based on the provided email
         $user = User::where('email', request('email'))->first();
 
-        // Menambahkan keterangan khusus langsung ke token yang dihasilkan
+        // Add custom claims to the token
         $customClaims = [
             'id' => $user->id,
             'name' => $user->name,
-            'level' => $user->level,
         ];
 
+        // Create the token with claims
         $tokenWithClaims = JWTAuth::claims($customClaims)->fromUser($user);
 
+        // Return the response with the token
         return $this->respondWithToken($tokenWithClaims, $user);
     }
 
@@ -114,13 +120,9 @@ class AuthController extends Controller
             'access_token' => $token,
             'sub' => $user->id,
             'name' => $user->name,
-            'level' => $user->level,
             'iat' => now()->timestamp,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
         ]);
     }
-    
-    
-
 }

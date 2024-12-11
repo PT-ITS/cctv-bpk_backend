@@ -6,33 +6,30 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PemeriksaanController;
 
 Route::group([
-    'prefix' => 'auth'
+  'prefix' => 'auth'
+], function () {
+  Route::post('register', [AuthController::class, 'register']);
+  Route::post('login', [AuthController::class, 'login']);
+  Route::group([
+    'middleware' => 'auth:api'
   ], function () {
-    Route::post('register', [AuthController::class,'register']);
-    Route::post('login', [AuthController::class,'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::get('me', [AuthController::class, 'me']);
+
     Route::group([
       'middleware' => 'auth:api'
-    ], function(){
-      Route::post('logout', [AuthController::class,'logout']);
-      Route::post('refresh', [AuthController::class, 'refresh']);
-      Route::get('me', [AuthController::class,'me']);
-      
-      Route::group([
-        'middleware' => 'auth:api'
-      ], function () {
-
-      });
-      
-    });
+    ], function () {});
   });
+});
 
 Route::group([
-    'prefix' => 'pemeriksaan'
+  'prefix' => 'pemeriksaan'
 ], function () {
-    Route::post('list', [PemeriksaanController::class, 'listPengajuan']);
-    Route::post('create', [PemeriksaanController::class, 'createPemeriksaan']);
-    Route::put('update/{id}', [PemeriksaanController::class, 'updatePemeriksaan']);
-    Route::delete('delete/{id}', [PemeriksaanController::class, 'deletePemeriksaan']);
+  Route::get('list', [PemeriksaanController::class, 'listPengajuan']);
+  Route::post('create', [PemeriksaanController::class, 'createPemeriksaan']);
+  Route::put('update/{id}', [PemeriksaanController::class, 'updatePemeriksaan']);
+  Route::delete('delete/{id}', [PemeriksaanController::class, 'deletePemeriksaan']);
 });
 
 Route::group([
@@ -42,5 +39,3 @@ Route::group([
   Route::put('update/{id}', [PemeriksaanController::class, 'updateProgres']);
   Route::delete('delete/{id}', [PemeriksaanController::class, 'deleteProgres']);
 });
-
-
