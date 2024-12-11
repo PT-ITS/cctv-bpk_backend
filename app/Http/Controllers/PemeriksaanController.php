@@ -21,12 +21,14 @@ class PemeriksaanController extends Controller
     {
         try {
             $validateData = $request->validate([
-                'jenis_pemeriksaan' => 'required' 
+                'jenis_pemeriksaan' => 'required',
+                'user_id' => 'required' 
             ]);
 
             $pemeriksaan = Pemeriksaan::create([
                 'jenis_pemeriksaan' => $validateData['jenis_pemeriksaan'],
-                'user_id' => auth()->user()->id
+                'user_id' => $validateData['user_id'],
+                // 'user_id' => auth()->user()->id
             ]);
             return response()->json([
                 'id' => '1',
