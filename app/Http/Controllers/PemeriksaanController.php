@@ -10,7 +10,7 @@ class PemeriksaanController extends Controller
 {
     public function listPengajuan()
     {
-        $dataPemeriksaan = Pemeriksaan::all();
+        $dataPemeriksaan = Pemeriksaan::with('user')->get();
         return response()->json([
             'id' => '1',
             'data' => $dataPemeriksaan
