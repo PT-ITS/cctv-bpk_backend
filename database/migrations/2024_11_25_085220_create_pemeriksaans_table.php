@@ -16,7 +16,6 @@ class CreatePemeriksaansTable extends Migration
         Schema::create('pemeriksaans', function (Blueprint $table) {
             $table->id();
             $table->string('jenis_pemeriksaan');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -20,11 +20,12 @@ class CreateProgresTable extends Migration
             $table->string('lampiran');
             $table->text('keterangan');
             $table->enum('status', [
-                '0',
-                '1',
-                '2'
+                '0', // Process
+                '1', // Approved
+                '2' // Rejected
             ])->default('0');
-            $table->foreignId('id_pemeriksaan')->constrained('pemeriksaans')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('pemeriksaan_id')->constrained('pemeriksaans')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

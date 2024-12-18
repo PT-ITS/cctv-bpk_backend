@@ -66,6 +66,7 @@ class AuthController extends Controller
         $customClaims = [
             'id' => $user->id,
             'name' => $user->name,
+            'level' => $user->level,
         ];
 
         // Create the token with claims
@@ -120,6 +121,7 @@ class AuthController extends Controller
             'access_token' => $token,
             'sub' => $user->id,
             'name' => $user->name,
+            'level' => $user->level,
             'iat' => now()->timestamp,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,

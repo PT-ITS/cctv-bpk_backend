@@ -5,17 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Progres extends Model
+class PenggunaWilayah extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'progres_pemeriksaan',
-        'tanggal',
-        'lampiran',
-        'keterangan',
-        'status',
-        'pemeriksaan_id',
+        'nama_pengguna',
+        'jabatan_pengguna',
+        'hp_pengguna',
+        'alamat_pengguna',
+        'nama_wilayah',
+        'alamat_wilayah',
         'user_id',
     ];
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PenggunaWilayah;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Register;
@@ -16,17 +17,29 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // Pusat
         User::create([
             'name' => 'admin',
-            'email' => 'amitie@gmail.com',
-            'password' => Hash::make('4m1TI3A6ency'),
+            'email' => 'admin@gmail.com',
+            'password' => Hash::make('nw4kpfzduBfeCpY'),
+            'level' => '0',
         ]);
 
-        // Register::create([
-        //     'fullname' => 'admin',
-        //     'email' => 'admin@gmail.com',
-        //     'num_phone' => '72074242',
-        //     'company' => 'test',
-        // ]);
+        // Regional
+        User::create([
+            'name' => 'wilayah',
+            'email' => 'wilayah@gmail.com',
+            'password' => Hash::make('nw4kpfzduBfeCpY'),
+            'level' => '1',
+        ]);
+        PenggunaWilayah::create([
+            'nama_pengguna' => 'Pengguna Wilayah',
+            'jabatan_pengguna' => 'Ketua Wilayah',
+            'hp_pengguna' => '08123456789',
+            'alamat_pengguna' => 'Alamat Pengguna Wilayah',
+            'nama_wilayah' => 'BPK Wilayah',
+            'alamat_wilayah' => 'Alamat Wilayah',
+            'user_id' => '2',
+        ]);
     }
 }
